@@ -15,7 +15,7 @@ ifeq ($(DEBUG), 1)
 	LDFLAGS= -shared
 else
 	CFLAGS=-O3 $(INCLUDES) -Wall
-	LDFLAGS= -shared -s
+	LDFLAGS= -shared
 endif
 
 ifeq ($(DEBUG_ASAN), 1)
@@ -55,14 +55,14 @@ ifeq ($(findstring CYGWIN,$(shell uname)),CYGWIN)
 EXEC=libusbhxcfe.dll
 endif
 
-all: $(EXEC)
+all: $(EXEC) libusbhxcfe.a
 
 libusbhxcfe.dll: win32_libusbhxcfe_res.o usb_hxcfloppyemulator.o variablebitrate.o ftdi.o ../../../build/libhxcadaptor.a ../../../build/libhxcfe.dll
 	$(CC) -o $@    $^ $(LDFLAGS)
 	cp $@ ../../../build
 
-libusbhxcfe.dylib: usb_hxcfloppyemulator.o variablebitrate.o ftdi.o
-	$(AR) r $@    $^
+libusbhxcfe.dylib: usb_hxcfloppyemulator.o variablebitrate.o ftdi.o ../../../build/libhxcadaptor.a ../../../build/libhxcfe.a
+	$(CC) -o $@    $^ $(LDFLAGS)
 	cp $@ ../../../build
 
 libusbhxcfe.a: usb_hxcfloppyemulator.o variablebitrate.o ftdi.o

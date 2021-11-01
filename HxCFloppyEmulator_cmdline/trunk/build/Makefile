@@ -13,7 +13,7 @@ ifeq ($(DEBUG), 1)
 	LDFLAGS=
 else
 	CFLAGS=-O3 $(INCLUDES) -Wall
-	LDFLAGS= -s
+	LDFLAGS=
 endif
 
 ifeq ($(DEBUG_ASAN), 1)
@@ -59,13 +59,17 @@ LIBUSBHXCFE= libusbhxcfe.dll
 LDFLAGS += -lc -lm -ldl -lpthread
 endif
 
-all: $(EXEC)
+all: $(EXEC) hxcfe.static
 
 hxcfe.exe:  hxcfe.o utils.o ../../../build/libhxcadaptor.a $(LIBHXCFE) $(LIBUSBHXCFE)
 	$(CC) -o $@    $^ $(LDFLAGS)
 	cp $@ ../../../build
 
 hxcfe:  hxcfe.o utils.o ../../../build/libhxcadaptor.a $(LIBHXCFE) $(LIBUSBHXCFE)
+	$(CC) -o $@    $^ $(LDFLAGS)
+	cp $@ ../../../build
+
+hxcfe.static:  hxcfe.o utils.o ../../../build/libhxcadaptor.a ../../../build/libhxcfe.a ../../../build/libusbhxcfe.a
 	$(CC) -o $@    $^ $(LDFLAGS)
 	cp $@ ../../../build
 
@@ -89,7 +93,7 @@ clean:
 	rm -rf *.map
 
 mrproper: clean
-	rm -rf $(EXEC)
+	rm -rf $(EXEC) hxcfe.static
 	rm -rf *.dylib
 
 .PHONY: clean mrproper

@@ -1,6 +1,6 @@
 /*
 //
-// Copyright (C) 2006-2021 Jean-François DEL NERO
+// Copyright (C) 2006-2021 Jean-Franï¿½ois DEL NERO
 //
 // This file is part of HxCFloppyEmulator.
 //
@@ -38,7 +38,7 @@
 // File : variablebitrate.c
 // Contains: USB HxC FE data generator
 //
-// Written by: Jean-François DEL NERO
+// Written by: Jean-Franï¿½ois DEL NERO
 //
 // Change History (most recent first):
 ///////////////////////////////////////////////////////////////////////////////////
@@ -68,7 +68,7 @@ trackzone trackzonebuffer_temp[2048*2];
 trackpart trackpartbuffer_0[4096*2];
 trackpart trackpartbuffer_1[4096*2];
 
-void adjustrand(unsigned char * d, unsigned char * r)
+void adjustrand_variablebitrate(unsigned char * d, unsigned char * r)
 {
 	if ( (*d & 0xC0) == 0xC0)
 	{
@@ -512,7 +512,7 @@ int32_t GetNewTrackRevolution(HXCFE* floppycontext,uint8_t * index_h0,uint8_t * 
 #endif
 
 	/////////////////////////////////////////////////////////////
-	// calcul de la granularité de chaque zone
+	// calcul de la granularitï¿½ de chaque zone
 
 	// head 0
 	i=0;
@@ -594,7 +594,7 @@ int32_t GetNewTrackRevolution(HXCFE* floppycontext,uint8_t * index_h0,uint8_t * 
 	}while(i<=trackzoneindex1);
 
 	/////////////////////////////////////////////////////////////
-	// construction de la liste des zone a générer.
+	// construction de la liste des zone a gï¿½nï¿½rer.
 
 	// head 0
 	i=0;
@@ -846,7 +846,7 @@ int32_t GetNewTrackRevolution(HXCFE* floppycontext,uint8_t * index_h0,uint8_t * 
 					randomh0tmp=randomh0[i];
 				}
 
-				adjustrand(&datah0tmp, &randomh0tmp);
+				adjustrand_variablebitrate(&datah0tmp, &randomh0tmp);
 
 			}
 			else
@@ -862,7 +862,7 @@ int32_t GetNewTrackRevolution(HXCFE* floppycontext,uint8_t * index_h0,uint8_t * 
 					randomh1tmp=randomh1[j];
 				}
 
-				adjustrand(&datah1tmp, &randomh1tmp);
+				adjustrand_variablebitrate(&datah1tmp, &randomh1tmp);
 
 			}
 			else

@@ -16,7 +16,7 @@ ifeq ($(DEBUG), 1)
 	LDFLAGS= -shared
 else
 	CFLAGS=-O3 $(INCLUDES) -Wall
-	LDFLAGS= -shared -s
+	LDFLAGS= -shared
 endif
 
 ifeq ($(DEBUG_ASAN), 1)
@@ -118,7 +118,7 @@ LIBS_OBJS = $(BASE) $(FS_SUPPORT) $(ADFLIBOBJ) $(ENCODING_SUPPORT) $(TRACK_FORMA
 			$(DISKWRITERPLUGINS) $(XDMSLIBOBJ) $(ZLIBOBJ) $(MINIZIPOBJ) $(LZ4OBJ) \
 			$(XML_DISK) $(XML_PARSER_EXPAT) $(FATIOLIB)
 
-all: SCRIPT_FILE $(BASEDIR)/licensetxt.h XML_FILES BMP_FILES $(EXEC)
+all: SCRIPT_FILE $(BASEDIR)/licensetxt.h XML_FILES BMP_FILES $(EXEC) libhxcfe.a
 
 XML_FILES: bmptoh $(XML_DSKLAYOUT_OUTPUTS)
 
@@ -860,6 +860,7 @@ mrproper: clean
 	rm -rf $(EXEC)
 	rm -rf *.dll
 	rm -rf *.dylib
+	rm -rf *.a
 	$(MAKE) -C ../sources/xml_disk/converttools/bmptob8 mrproper
 
 .PHONY: clean mrproper

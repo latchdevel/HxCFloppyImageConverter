@@ -8,10 +8,10 @@ libhxcadaptor:
 libhxcfe: libhxcadaptor
 	$(MAKE) -C ../libhxcfe/trunk/build/
 
-libusbhxcfe: libhxcadaptor
+libusbhxcfe: libhxcadaptor libhxcfe
 	$(MAKE) -C ../libusbhxcfe/trunk/build/
 
-HxCFloppyEmulator_cmdline: libhxcfe libusbhxcfe
+HxCFloppyEmulator_cmdline: libusbhxcfe
 	$(MAKE) -C ../HxCFloppyEmulator_cmdline/trunk/build/
 
 mrproper:
@@ -33,7 +33,7 @@ mrproper:
 	-rm -rf *.app
 	-rm -rf hxcfe_cmdline
 	-rm -rf hxcfloppyemulator
-	-rm -f  hxcfe
+	-rm -f  hxcfe hxcfe.static
 	-rm -rf Debug_*
 	-rm -rf Release_*
 	-rm -rf ADFOpus_*
